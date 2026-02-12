@@ -1,0 +1,66 @@
+generator client {
+  provider = "prisma-client-js"
+  output   = "../generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id              String  @id @default(uuid())
+  username        String  @unique
+  email           String  @unique
+  password        String?
+  rewardPoints    Float?
+  studyHours      Float?
+  googleId        String?
+  postedNotes     Notes[] @relation("Creator")
+  favouritedNotes Notes[] @relation("Favourites")
+  sessions Int?
+  profile  Profile?
+  todo     Todos[]
+  role    Roles   @default(user)
+
+}
+
+enum Roles {
+  user
+  admin
+}
+
+model Profile {
+  id     String @id @default(uuid())
+  bio    String
+  userId String @unique
+  user   User   @relation(fields: [userId], references: [id])
+}
+
+// model Group {
+//   id      String @id @default(uuid())
+//   adminId String
+//   admin   User   @relation("GroupAdmin", fields: [adminId], references: [username])
+//   members User[] @relation("GroupMembers")
+// }
+
+model Todos {
+  id              Int      @id @default(autoincrement())
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+  content         String?
+  creatorUsername String
+  creator         User     @relation(fields: [creatorUsername], references: [username], onDelete: Cascade)
+}
+
+model Notes {
+  id           Int      @id @default(autoincrement())
+  createdAt    DateTime @default(now())
+  url          String   @unique
+  title        String
+  description  String
+  createdBy    String
+  creator      User     @relation("Creator", fields: [createdBy], references: [username], onDelete: Cascade)
+  favouritedBy String?
+  favourited   User?    @relation("Favourites", fields: [favouritedBy], references: [username], onUpdate: Cascade)
+}
