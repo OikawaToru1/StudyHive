@@ -1,5 +1,5 @@
 import { Router } from "express";
-import {signup, logout} from '../controllers/auth.controller.js'
+import {signup} from '../controller/authController.js'
 import passport from "passport";
 import LocalStrategy from 'passport-local'
 import {ensureAuthenticated} from '../middleware/auth.js'
@@ -38,14 +38,16 @@ authRouter.post('/login',async (req, res)=> {
 
 authRouter.get('/google', passport.authenticate('google',{scope : ['profile','email']}))
 authRouter.get('/google/callback',
-    passport.authenticate('google',{failureRedirect: false}),(req,res)=>{
+    passport.authenticate('google',{failureRedirect: '/'}),(req,res)=>{
         console.log('authenticate body', req.body)
+        //  res.status(200).json({valid:true, user : req.user})
+         return res.redirect('http://localhost:5173/home')
         // return res.status(200).json({valid: true})
     }
 )
 
 authRouter.get('/logout', (req,res)=>{
-    console.log(req.user,'you wanna fucing log out ?')
+    console.log(req.user,'you wanna log out ?')
     req.logout((err)=>{
         if(err)
         {
