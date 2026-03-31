@@ -14,6 +14,7 @@ import {v2 as cloudinary} from 'cloudinary'
 import { upload } from './middleware/multer.js'
 import { uploadToTCloudinary } from './cloudinary/fileUpload.js'
 import Groq from 'groq-sdk'
+import { connect } from 'node:http2'
 
 
 const prisma = new PrismaClient();
@@ -49,17 +50,112 @@ app.use('/api/todos',todoRouter);
 app.use('/api/pomo',timerRouter)
 app.use('/api/admin',adminRouter);
 
-app.get('/api/queries',(req,res)=>{
-    res.send("You will get queries ");
+app.get('/api/queries',async(req,res)=>{
+    const queries = await prisma.query.findMany();
+    res.send(queries) 
+    
 });
 
+app.post('/api/queries/answer',async(id,answer,writer)=>{
+    const query = await prisma.query.findUnique({
+        where : {
+            id : id
+        }
+    });
+    if(query)
+    {
+        const update = await prisma.query.update({
+            where : {
+                id : id
+            },
+            data : {
+                answers : {answer : answer, writer : writer }
+            }
+        })
+    }
+})
 
-app.post('/api/query/upload',(req,res)=>{
-    console.log(req.body)
+// const addTodo = async()=>{
+//     const newTodo = await prisma.todos.create({
+//         data : {
+//             content : "To provide supervision to my student. ",
+//             creator : {
+//                 connect : {
+//                     username : "rameshSir"
+//                 }
+//             }
+//         }
+//     }) 
+//     console.log(newTodo)
+// };
+
+// addTodo()
+
+app.get('/api/user/todos',async(req,res)=>{
+    const username = req.user.username
+    const todos = await prisma.todos.findMany({
+        where : {
+            creator : {
+                username : username
+            } 
+            
+        },
+        select : {
+            content : true
+        }
+    });
+    res.send(todos)
+})
+
+app.post('/api/admin/login',async(req, res)=>{
+    const {username , password} = req.body;
+    const admin = await prisma.admin.findUnique({
+        where : {
+            username : username
+        }
+    })
+    console.log(admin)
+
+   if(admin.password == password )
+   {
+        res.status(200).json({status: true, msg: "success", data: admin.username})
+       
+   }
+   else{
+    console.log("Bad login");
+    res.status(401).json({ status: false, msg: "wrong creds" });
+   }
+})
+//delete api
+// app.get(`/api/delete/queries/${query.id}`);
+
+app.post('/api/query/upload',async(req,res)=>{
+    
+    const {query, creator} = req.body;
+    const newQuery = await prisma.query.create({
+        data : {
+            content : query,
+            authorUsername : creator
+        }
+    })
+    console.log(newQuery, 'created a new query');
+    res.send(newQuery)
 })
 app.post('/api/file-query/upload',(req,res)=>{
     console.log(req.body)
 })
+
+app.get('/api/query/:queryId',(req,res)=>{
+    const queryId = req.params.queryId;
+    console.log("Query id ", queryId)
+    res.send("You will get query details for query id " + queryId);
+})
+
+app.post('/api/query/:queryId/answer',(req,res)=>{
+    console.log(req.body)
+})
+
+
 
 app.post('/api/upload',upload.single('my_file'),async(req,res)=>{
 
@@ -95,6 +191,8 @@ app.get('/api/files',async(req,res)=>{
     // console.log(files, 'you have these files with you')
     res.send(files)
 });
+
+
 
 app.post('/api/ask-ai',async(req,res)=>{
     const {prompt} = req.body;
@@ -181,6 +279,26 @@ io.on("connection",async(socket)=>{
         console.log('Room message :', roomName, message, sender)
         io.to(roomName).emit('room message', message, sender)
     })
+
+    socket.on('call-processing',(details)=>{
+        console.log('Call processing details :', details)
+        const {caller, receiver} = details;
+        console.log(caller, receiver)
+        io.emit(`calling-${receiver}`,caller);
+        
+    })
+
+    socket.on('calling-accepted',(remotePeerId,caller)=>{
+            console.log("Call accepted from caller", caller)
+            io.emit(`${caller}-call-succesfull`,remotePeerId)
+        })
+
+    socket.on("end-call",({from,to})=>{
+        console.log("ending call from",from, "to", to)
+        io.emit(`${to}-call-ended`,from)
+    })
+
+    
 })
 
 server.listen(8080,()=>console.log("Im listening at port 8080"));
