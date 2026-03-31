@@ -15,6 +15,7 @@ import { upload } from './middleware/multer.js'
 import { uploadToTCloudinary } from './cloudinary/fileUpload.js'
 import Groq from 'groq-sdk'
 import { connect } from 'node:http2'
+import cors from 'cors'
 
 
 const prisma = new PrismaClient();
@@ -36,6 +37,10 @@ const io = new Server(server,{
 
 app.use(express.json())
 app.use(express.urlencoded({extended: true}))
+app.use(cors({
+    origin : '*'
+}))
+
 
 app.use(session({secret: "cats", resave: false , saveUninitialized: false}))
 app.use(passport.initialize())
