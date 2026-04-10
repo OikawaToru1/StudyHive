@@ -32,7 +32,7 @@ function Dashboard() {
   // Fetch real leaderboard data
   useEffect(() => {
     axios
-      .get("/api/admin/users") // Replace with your public user endpoint if different
+      .get("https://studyhive-sse4.onrender.com/api/admin/users") // Replace with your public user endpoint if different
       .then((res) => {
         const sorted = [...res.data].sort(
           (a, b) => (b.studyHours || 0) - (a.studyHours || 0),
@@ -41,12 +41,12 @@ function Dashboard() {
       })
       .catch((err) => console.log("Leaderboard error:", err));
 
-      axios.get('/api/user/todos')
+      axios.get('https://studyhive-sse4.onrender.com/api/user/todos')
       .then(res=> setTodos(res.data))
       .catch(err=> console.log(err));
   }, []);
 
-  axios.get('/api/user/todos')
+  axios.get('https://studyhive-sse4.onrender.com/api/user/todos')
   .then(res=> console.log(res.data))
   .catch(err => console.log(err))
 

@@ -271,7 +271,8 @@ function Home() {
 
   useEffect(() => {
 
-    axios.get("/api/auth/me")
+    axios
+      .get("https://studyhive-sse4.onrender.com/api/auth/me")
       .then((res) => {
         console.log("Auth state", res.data);
         if (!username) {
@@ -280,7 +281,7 @@ function Home() {
       })
       .catch((err) => console.log("err in authenticated me", err));
 
-    axios.post('/api/user/session',sessions)
+    axios.post('https://studyhive-sse4.onrender.com/api/user/session',sessions)
   }, []);
 
 

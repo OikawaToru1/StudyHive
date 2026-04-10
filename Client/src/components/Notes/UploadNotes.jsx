@@ -33,7 +33,7 @@ function UploadNotes() {
         form.append('my_file',data.image[0]);
         form.append('creator',username)
 
-        axios.post('/api/upload',form)
+        axios.post('https://studyhive-sse4.onrender.com/api/upload',form)
         .then(res=>{ 
           console.log("File posted !",res.data);
           setMessageStatus(true)

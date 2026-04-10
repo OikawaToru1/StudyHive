@@ -9,7 +9,7 @@ function QueryDetail({ query, author, answers}) {
     const username = useSelector((state) => state.auth.user.username);
     const [answer, setAnswer] = React.useState({author : username|| "Testing", comment : ""});
     const handleAnswer = ()=>{
-      axios.post('/api/queries/answer',(query,answer))
+      axios.post('https://studyhive-sse4.onrender.com/api/queries/answer',(query,answer))
       .then(res=> {
         console.log(res)
       })

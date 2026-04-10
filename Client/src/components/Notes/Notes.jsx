@@ -58,7 +58,7 @@ function Notes() {
 
   useEffect(() => {
     axios
-      .get("/api/files")
+      .get("https://studyhive-sse4.onrender.com/api/files")
       .then((res) => {
         setFiles(res.data);
         // const files = res.data;

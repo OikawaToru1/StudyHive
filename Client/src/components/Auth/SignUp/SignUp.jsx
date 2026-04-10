@@ -25,7 +25,7 @@ function SignUp() {
 
   const onSubmit = async(data)=>{
    console.log(data)
-   axios.post('/api/auth/signup',{username : data.username, email: data.email, password: data.password})
+   axios.post('https://studyhive-sse4.onrender.com/api/auth/signup',{username : data.username, email: data.email, password: data.password})
    .then(res=> {
     console.log(res.data)
     if(res.data.valid)
@@ -51,7 +51,7 @@ function SignUp() {
 
   useEffect(()=>{
 
-    axios.get('/api/auth/me')
+    axios.get('https://studyhive-sse4.onrender.com/api/auth/me')
     .then(res=> {
       console.log('Auth state', res.data)
       if(!authStatus)
@@ -65,7 +65,7 @@ function SignUp() {
     {
       navigate('/home')
     }
-    axios.get('/api/auth/signup')
+    axios.get('https://studyhive-sse4.onrender.com/api/auth/signup')
     .then(res=> console.log(res.data))
     .catch(err=> console.log(err))
   },[navigate, onSubmit])

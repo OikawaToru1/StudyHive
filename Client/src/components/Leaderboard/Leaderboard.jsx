@@ -21,7 +21,7 @@ function Leaderboard() {
 
   useEffect(() => {
     axios
-      .get("/api/admin/users")
+      .get("https://studyhive-sse4.onrender.com/api/admin/users")
       .then((res) => {
         // Sorting logic: Sort by hours, then sessions
         const sorted = [...res.data].sort((a, b) => {

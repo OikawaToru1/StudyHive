@@ -13,7 +13,7 @@ import { addUser } from "../../../store/authSlice";
 function Login() {
   const theme = useSelector((state) => state.theme.value);
   const authStatus = useSelector((state) => state.auth.user.authStatus);
-  console.log("auth status", authStatus);
+  // console.log("auth status", authStatus);
   const dispatch = useDispatch();
   const { register, handleSubmit } = useForm();
   const navigate = useNavigate();
@@ -30,7 +30,7 @@ function Login() {
   const login = (data) => {
     console.log(data);
     axios
-      .post("/api/auth/login", {
+      .post("https://studyhive-sse4.onrender.com/api/auth/login", {
         username: data.username,
         password: data.password,
       })
@@ -46,26 +46,32 @@ function Login() {
 
   useEffect(() => {
 
+    // testing api calling
+
+    axios.get("https://studyhive-sse4.onrender.com")
+    .then(res => console.log(res.data))
+    .catch(err => console.log(err))
+
     axios
-      .get("/api/auth/me")
+      .get("https://studyhive-sse4.onrender.com/api/auth/me")
       .then((res) => {
         console.log("Auth state", res.data);
         if (!authStatus) {
           dispatch(addUser({ username: res.data.username }));
         }
       })
-      .catch((err) => console.log("err in authenticated me", err));
+      .catch((err) => console.log("You're not authenticated yet !!!", err));
 
     if (authStatus) {
       navigate("/home");
     }
 
     axios
-      .get("/api/auth/login")
+      .get("https://studyhive-sse4.onrender.com/api/auth/login")
       .then((res) => console.log(res.data))
       .catch((err) => console.log(err));
 
-    axios.get('/api/google/callback')
+    axios.get('https://studyhive-sse4.onrender.com/api/google/callback')
     .then(res => console.log(res.data))
     .catch(err=> console.log(err))
 

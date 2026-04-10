@@ -38,7 +38,9 @@ function Queries() {
       setPrompt("");
 
       axios
-        .post("/api/ask-ai", { prompt: prompt })
+        .post("https://studyhive-sse4.onrender.com/api/ask-ai", {
+          prompt: prompt,
+        })
         .then((res) => {
           setAiConversation((prev) => [
             ...prev,
@@ -55,7 +57,7 @@ function Queries() {
       alert("You must log in to upload file");
     } else if (!data.file) {
       console.log("Submitting query - ", data.query, " by user - ", username);
-      axios.post("/api/query/upload", { query: data.query, creator: username })
+      axios.post("https://studyhive-sse4.onrender.com/api/query/upload", { query: data.query, creator: username })
       .then(res=> (setQueries(prev=>[res.data,...prev])))
       .catch(err=> {console.log("error in file uplaod")})
     } else {
@@ -71,7 +73,7 @@ function Queries() {
       form.append("creator", username);
 
       axios
-        .post("/api/file-query/upload", form)
+        .post("https://studyhive-sse4.onrender.com/api/file-query/upload", form)
         .then((res) => {
           console.log("File posted !", res.data);
           setMessageStatus(true);
@@ -96,7 +98,7 @@ function Queries() {
   ];
   useEffect(() => {
     axios
-      .get("/api/queries")
+      .get("https://studyhive-sse4.onrender.com/api/queries")
       .then((res) => {
         console.log(res.data)
         res.data.map(query=> (setQueries(prev=> [...prev, query])))
