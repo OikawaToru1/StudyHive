@@ -2,8 +2,8 @@ import axios from 'axios'
 import React, { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { useSelector } from 'react-redux'
-import { Link } from 'react-router'
-import ShowFile from './showFiles'
+// import { Link } from 'react-router'
+// import ShowFile from './showFiles'
 import PopOut from './PopOut'
 
 
