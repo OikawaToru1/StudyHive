@@ -25,7 +25,7 @@ function App() {
   })
     
   useEffect(()=>{
-    axios.get('/api/users')
+    axios.get('https://studyhive-sse4.onrender.com/api/users')
     .then(res=> console.log(res.data))
     .catch(err=> console.log('err in fetch',err));
 
