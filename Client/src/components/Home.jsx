@@ -396,7 +396,9 @@ function Home() {
           <div className=" flex justify-around lg:w-[200px] md:w-[150px] w-[135px] xl:text-3xl lg:text-3xl md:text-2xl sm:text-xl text-md font-bold text-blue-500    ">
             <div
               className={`${
-                theme ? "text-white" : "text-black"
+                theme
+                  ? "text-white flex items-center cursor-pointer"
+                  : "text-black flex items-center cursor-pointer"
               } w-10 pl-2 text-white text-center`}
               onClick={() => {
                 setShowSideBar((prev) => !prev);
@@ -407,7 +409,7 @@ function Home() {
                 size={25}
               />
             </div>
-            <div>
+            <div className="select-none">
               <NavLink to="/">StudyHive</NavLink>
             </div>
           </div>
@@ -618,7 +620,6 @@ function Home() {
                 <Link to={option.path}>{option.name} </Link>
               </div>
             ))}
-            
           </div>
         )}
 
@@ -638,25 +639,27 @@ function Home() {
                 <p className="lg:text-9xl md:text-6xl sm:text-4xl text-7xl text-center font-bold">
                   {start.min}:{start.sec}
                 </p>
-                <button
-                  className=" hover:text-gray-700 hover:cursor-pointer p-3 m-5"
-                  onClick={handleStart}
-                >
-                  {" "}
-                  Start
-                </button>
-                <button
-                  className="rounded-md hover:bg-white hover:text-gray-600 border-1 border-blue-200 p-3 m-5"
-                  onClick={handleStop}
-                >
-                  Stop
-                </button>
-                <button
-                  className="rounded-md hover:bg-white hover:text-gray-600 border-1 border-blue-200 p-3 m-5"
-                  onClick={handleRestart}
-                >
-                  Restart
-                </button>
+                <div className="flex w-full">
+                  <button
+                    className=" hover:text-gray-700 hover:cursor-pointer p-3 m-5"
+                    onClick={handleStart}
+                  >
+                    {" "}
+                    Start
+                  </button>
+                  <button
+                    className="rounded-md hover:bg-white hover:text-gray-600 border-1 border-blue-200 p-3 m-5"
+                    onClick={handleStop}
+                  >
+                    Stop
+                  </button>
+                  <button
+                    className="rounded-md hover:bg-white hover:text-gray-600 border-1 border-blue-200 p-3 m-5"
+                    onClick={handleRestart}
+                  >
+                    Restart
+                  </button>
+                </div>
               </div>
               <TodoStatus
                 themeStatus={theme}
