@@ -5,6 +5,7 @@ import { FiTrendingUp, FiAward, FiClock } from "react-icons/fi";
 import { NavLink, Link } from "react-router";
 import axios from "axios";
 
+
 function Leaderboard() {
   const theme = useSelector((state) => state.theme.value);
   const [showSideBar, setShowSideBar] = useState(false);
@@ -84,7 +85,7 @@ function Leaderboard() {
               to="/"
               className="text-2xl font-black text-blue-500 tracking-tight"
             >
-              AdminHive
+              StudyHive
             </NavLink>
           </div>
           <nav className="space-y-1">
