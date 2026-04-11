@@ -34,7 +34,7 @@ function Header() {
         </li>
         {/* <li className='p-4 w-32'> Contact</li> */}
         <li
-          className="p-4 w-32"
+          className="p-4 w-32 cursor-pointer"
           onClick={() => {
             dispatch(changeTheme(!darkTheme));
             setDarkTheme((prev) => !prev);
