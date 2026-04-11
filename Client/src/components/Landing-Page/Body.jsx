@@ -52,7 +52,7 @@ function Body() {
                 />
             </div>
             <p className='md:text-2xl text-xl font-bold text-gray-500'> If you are ready to boost your productivity, join us in this project</p>
-            <button className='bg-blue-500 w-[200px] rounded-md font-medium my-6 mx-auto py-2.5 text-black' onClick={()=>{navigate('/home')}}>Get Started</button>
+            <button className='bg-blue-500 w-[200px] cursor-pointer rounded-md font-medium my-6 mx-auto py-2.5 text-black' onClick={()=>{navigate('/home')}}>Get Started</button>
         </div>
     </div>
   )
