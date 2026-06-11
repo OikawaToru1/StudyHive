@@ -170,7 +170,7 @@ app.post('/api/upload',upload.single('my_file'),async(req,res)=>{
     const fileName = req.file.filename;
     const creator = req.body.creator
     try {
-        const result =  await uploadToTCloudinary(req.file.path)
+        const result =  await uploadToTCloudinary(req.file.buffer, fileName)
         const newNote = await prisma.notes.create({
             data : {
                 url : result,
