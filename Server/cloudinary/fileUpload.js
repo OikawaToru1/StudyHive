@@ -1,5 +1,6 @@
 import { v2 as cloudinary } from "cloudinary";
-import 'node:fs'
+// import 'node:fs'
+import { Readable } from "node:stream";
 
 
 
@@ -9,29 +10,68 @@ cloudinary.config({
     api_secret : process.env.CLOUDINARY_API_SECRET ,
 })
 
-export const uploadToTCloudinary = async(localFilePath)=>{
-    const options = {
-        use_filename : true,
-        unique_filename : false,
-        overwrite: true,
-    }
-    if(!localFilePath) return null;
+// use this approach when handling files locally;
 
-    const result = await cloudinary.uploader.upload(localFilePath, options);
-    const url = cloudinary.url(result.public_id,{
-         transformation : [
-            {
-                quality : "auto",
-                fetch_format : "auto",
+// export const uploadToTCloudinary = async(localFilePath)=>{
+//     const options = {
+//         use_filename : true,
+//         unique_filename : false,
+//         overwrite: true,
+//     }
+//     if(!localFilePath) return null;
+
+//     const result = await cloudinary.uploader.upload(localFilePath, options);
+//     const url = cloudinary.url(result.public_id,{
+//          transformation : [
+//             {
+//                 quality : "auto",
+//                 fetch_format : "auto",
+//             },
+//             {
+//                 width : 1200,
+//                 height : 1200,
+//                 crop: 'fill',
+//                 gravity : 'auto'
+//             }
+//          ]
+//     });
+
+//     return url;
+// }
+
+
+export const uploadToTCloudinary = async (fileBuffer , fileName)=>{
+    try {
+        
+        console.log("Uploading files to cloudinary with data", fileName, fileBuffer);
+        if(!fileBuffer || !fileName) return null;
+
+        return await Promise((resolve,reject)=>{
+            const stream = cloudinary.uploader.upload_stream({
+                resource_type: "raw",
+                use_filename: true,
+                unique_filename: false,
+                overwrite : true,
+                public_id : fileName,
             },
+        (error,result)=>{
+            if(error)
             {
-                width : 1200,
-                height : 1200,
-                crop: 'fill',
-                gravity : 'auto'
+                console.log("Error in uploading to cloudinary",error);
+                return reject(error);
             }
-         ]
-    });
+            else{
+                console.log("File uploaded to Cloudinary Succesfully !!!",result)
+                return resolve(result);
+            }
+        }
+        );
 
-    return url;
+        Readable.from(fileBuffer).pipe(stream);
+        });
+
+    } catch (error) {
+        console.log("Error uplaoding to Cloudinary", error);
+        return null;
+    }
 }
