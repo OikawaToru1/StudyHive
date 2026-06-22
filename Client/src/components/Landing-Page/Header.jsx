@@ -21,15 +21,15 @@ function Header() {
     <div
       className={`${theme ? "bg-black text-white" : "bg-white text-black"}  flex justify-between items-center h-24 w-full mx-auto px-4 border-b border-gray-700  `}
     >
-      <div className="w-full text-3xl ml-8 font-bold text-blue-500">
+      <div className="w-full text-3xl ml-8 font-bold text-blue-500 cursor-pointer">
         <NavLink to="/">StudyHive</NavLink>
       </div>
 
       <ul className="hidden md:flex">
-        <li className="p-4 w-32">
+        <li className="p-4 w-32 cursor-pointer">
           <NavLink to="/home">Home</NavLink>
         </li>
-        <li className="p-4 w-32">
+        <li className="p-4 w-32 cursor-pointer">
           <NavLink to={'/about'}>About</NavLink>
         </li>
         {/* <li className='p-4 w-32'> Contact</li> */}
@@ -42,7 +42,7 @@ function Header() {
         >
           Theme
         </li>
-        <li className="p-4 w-32">
+        <li className="p-4 w-32 cursor-pointer">
           {username ? (
             <p>{username}</p>
           ) : (
@@ -68,10 +68,10 @@ function Header() {
           <NavLink to="/">StudyHive</NavLink>
         </div>
         <ul className="p-4">
-          <li className="p-4 border-b border-b-gray-300  ">Home</li>
-          <li className="p-4  border-b border-b-gray-300 ">About</li>
-          <li className="p-4  border-b border-b-gray-300 "> Contact</li>
-          <li className="p-4  ">Setting</li>
+          <li className="p-4 border-b border-b-gray-300  cursor-pointer">Home</li>
+          <li className="p-4  border-b border-b-gray-300 cursor-pointer">About</li>
+          <li className="p-4  border-b border-b-gray-300 cursor-pointer"> Contact</li>
+          <li className="p-4  cursor-pointer">Setting</li>
         </ul>
       </div>
     </div>
