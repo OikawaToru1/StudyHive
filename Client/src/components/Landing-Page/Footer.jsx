@@ -12,15 +12,22 @@ function Footer() {
       <div>
         <h1 className="w-full text-3xl font-bold text-blue-500">StudyHive</h1>
         <p className="py-2 font-bold ">
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Quas debitis
-          ipsa beatae quae impedit quod soluta, perferendis commodi voluptates.
-          Ullam.
+          A solo platform that provides a variety of tools to help you stay
+          focused and productive while studying.
         </p>
         <div className="flex justify-between my-6 md:w-[75%]">
-          <FaFacebook size={30} />
-          <FaGithubSquare size={30} />
-          <FaInstagramSquare size={30} />
-          <FaTwitterSquare size={30} />
+          <Link to="https://www.github.com/OikawaToru1">
+            <FaFacebook size={30} />
+          </Link>
+          <Link to="https://www.github.com/OikawaToru1">
+            <FaGithubSquare size={30} />
+          </Link>
+          <Link to="https://www.github.com/OikawaToru1">
+            <FaInstagramSquare size={30} />
+          </Link>
+          <Link to="https://www.github.com/OikawaToru1">
+            <FaTwitterSquare size={30} />
+          </Link>
         </div>
       </div>
 
@@ -28,20 +35,15 @@ function Footer() {
         <div>
           <h6 className="font-medium text-gray-400">
             <Link to="https://www.linkedin.com/in/aniket-adhikari01/">
-              Aniket
+              Aniket Adhikari.
             </Link>
           </h6>
-          <ul>
-            <li className="py-2 text-sm">
-              <Link >
-                Facebook
-              </Link>
-            </li>
-            <li className="py-2 text-sm">
-              <Link to="">Insta</Link>
-            </li>
+          <ul >
             <li className="py-2 text-sm">
               <Link to="https://github.com/OikawaToru1">Github</Link>
+            </li>
+            <li className="py-2 text-sm">
+              <Link to="https://www.linkedin.com/in/aniket-adhikari01/">LinkedIn</Link>
             </li>
           </ul>
         </div>
